@@ -34,3 +34,4 @@ async def clear_error(ctx, error):
 
 # ==== Bot Client Key ==== #
 client.run("ODU0MzA1Nzc2NjUwNDIwMjI0.YMiAQQ.Wef2LP-tMqyds7tAuafaTIHcdvo")
+#test
