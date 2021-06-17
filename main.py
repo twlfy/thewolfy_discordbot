@@ -22,15 +22,15 @@ async def helpme(ctx):
     !hellobot - A hello message just to check if i'm on duty xd""")
 
 @client.command() #=== !clear ===
-@commands.has_permissions(administrator=True) # Command Permissions to administrator
+@commands.has_role("Moderator")  # check the user role
 async def clear(ctx, amount=None): #amount = amount of messages to delete
     await ctx.channel.purge(limit=amount) #ctx.channel = channel where is executed calling the purge
     await ctx.send("Deleted. Oopsie....i've typed in :\ might delete later")
 
 @clear.error
 async def clear_error(ctx, error):
-    if isinstance(error, MissingPermissions):
-        await ctx.send("Oopsie... You don't have admin permissions")
+    if isinstance(error, (commands.MissingRole, commands.MissingAnyRole)):
+        await ctx.send("Oopsie... You don't have admin permissions. You need 'Moderator' role to clear all the sh%t :)")
 
 # ==== Bot Client Key ==== #
 client.run("ODU0MzA1Nzc2NjUwNDIwMjI0.YMiAQQ.Wef2LP-tMqyds7tAuafaTIHcdvo")
