@@ -41,14 +41,17 @@ async def clear_error(ctx, error):
 @commands.has_role("Moderator")
 async def kick(ctx, member : discord.Member, *, reason=None): #saying member to read discord's member function
                                                               # * = Offer space after every argument written by the moderator / administrator
+        
     await member.kick(reason=reason)
     await ctx.send(f"{member} has been kicked :^ (Reason: {reason})")
-
+        
 @client.command() #=== !ban ===
 @commands.has_role("Administrator")
 async def ban(ctx, member : discord.Member, *, reason=None): #saying member to read discord's member function
     await member.ban(reason=reason)
     await ctx.send(f"{member} has been banned :o (Reason: {reason})")
+    if ctx.message.author.server_permissions.administrator:
+        await ctx.send("Nu poti da kick unuia mai mare in gradul tau")
 
 @ban.error
 async def ban_error(ctx, error):
