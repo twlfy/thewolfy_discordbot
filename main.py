@@ -1,8 +1,11 @@
 # ==== Bot Connextion ==== #
 
 import discord
+from discord import user
 from discord.ext import commands
 from discord.ext.commands.errors import MissingPermissions
+from discord.member import Member
+from discord.user import User
 
 client = commands.Bot(command_prefix = '!')
 @client.event
@@ -62,6 +65,17 @@ async def ban_error(ctx, error):
 async def kick_error(ctx,error):
     if isinstance(error, (commands.MissingRole, commands.MissingAnyRole)):
         await ctx.send("OOF, you don't have moderator permissions for kicking users, homie :v")
+
+@client.command() #=== !about ===
+async def about(ctx):
+    await ctx.send(f"""Hi {discord.Member} ! I'm TheWølfy bot, the same nickname as my creator's ones. 
+    I am here to help communities develop their own administration stuff and also maybe have fun together! 
+    I'm designed in PYTHON3 programming language, in beta from June 2021.
+
+    Creator & Owner: TheWølfy#2483
+    Created: June 2021
+    Version: 1.0T (R - Official Release | T - Beta version test)""")
+
 
 # ==== Bot Client Key ==== #
 client.run("ODU0MzA1Nzc2NjUwNDIwMjI0.YMiAQQ.Wef2LP-tMqyds7tAuafaTIHcdvo")
