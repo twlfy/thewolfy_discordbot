@@ -32,7 +32,7 @@ async def helpme(ctx):
     """)
 
 @client.command() #=== !clear ===
-@commands.has_role("Moderator")  # check the user role
+@commands.has_role("Chad aimer")  # check the user role
 async def clear(ctx, amount = 0):
     await ctx.channel.purge(limit=amount+1)  #ctx.channel = channel where is executed calling the purge
     await ctx.send("Deleted. Oopsie....i've typed in :\ might delete later")
