@@ -6,6 +6,7 @@ from discord.ext import commands
 from discord.ext.commands.errors import MissingPermissions
 from discord.member import Member
 from discord.user import User
+from discord.ext.commands.cooldowns import BucketType
 
 client = commands.Bot(command_prefix = '!')
 @client.event
@@ -26,6 +27,7 @@ async def helpme(ctx):
     !clear* [lines] - Clear how many lines you want.
     !kick* [@user] [reason] - If someone was a bad boi, you can kick him for a good reason
     !ban* [@user] [reason] - Same with kick, but the ban is permanently and can be undone by the administrator 
+    !about - All the things about me
     * = Administrative commands (acces gained for moderators / administrators)
     """)
 
@@ -41,20 +43,24 @@ async def clear_error(ctx, error):
         await ctx.send("Oopsie... You don't have admin permissions. You need 'Moderator' role to clear all the sh%t :)")
 
 @client.command() #=== !kick ===
-@commands.has_role("Moderator")
+@commands.has_role("Chad aimer")
 async def kick(ctx, member : discord.Member, *, reason=None): #saying member to read discord's member function
                                                               # * = Offer space after every argument written by the moderator / administrator
         
+    if ctx.author.top_role <= member.top_role:
+        await ctx.send("The person you tried to kick has equal or higher role than you")
+        return
     await member.kick(reason=reason)
     await ctx.send(f"{member} has been kicked :^ (Reason: {reason})")
         
 @client.command() #=== !ban ===
-@commands.has_role("Administrator")
+@commands.has_role("Chad aimer")
 async def ban(ctx, member : discord.Member, *, reason=None): #saying member to read discord's member function
+    if ctx.author.top_role <= member.top_role:
+        await ctx.send("The person you tried to ban has equal or higher role than you")
+        return
     await member.ban(reason=reason)
     await ctx.send(f"{member} has been banned :o (Reason: {reason})")
-    if ctx.message.author.server_permissions.administrator:
-        await ctx.send("Nu poti da kick unuia mai mare in gradul tau")
 
 @ban.error
 async def ban_error(ctx, error):
@@ -68,10 +74,11 @@ async def kick_error(ctx,error):
 
 @client.command() #=== !about ===
 async def about(ctx):
-    await ctx.send(f"""Hi {discord.Member} ! I'm TheWølfy bot, the same nickname as my creator's ones. 
+    await ctx.send(f"""Hi {ctx.author.mention} ! I'm TheWølfy bot, the same nickname as my creator's one. 
     I am here to help communities develop their own administration stuff and also maybe have fun together! 
-    I'm designed in PYTHON3 programming language, in beta from June 2021.
-
+    I'm designed in PYTHON3 programming language, in beta from June 2021. I have no feeling 'cause i'm a bot, duuuh
+    so if you don't like me, i don't care :) 
+    
     Creator & Owner: TheWølfy#2483
     Created: June 2021
     Version: 1.0T (R - Official Release | T - Beta version test)""")
