@@ -35,8 +35,15 @@ async def helpme(ctx):
     .kick* [@user] [reason] - If someone was a bad boi, you can kick him for a good reason
     .ban* [@user] [reason] - Same with kick, but the ban is permanently and can be undone by the administrator 
     .about - All the things about me
+    .onlinecheck - See if i'm online
     * = Administrative commands (acces gained for moderators / administrators)
     """)
+
+@client.command()
+async def onlinecheck(ctx):
+    await ctx.send("""Status: Online
+    
+    Yes ! I'm online, but only when my master is online too. If you want to manage this server 24/7, pay fucking 4 dollars for a hosting service. xoxo""")
 
 @client.command() #=== !clear ===
 @commands.has_any_role("tot eu dar cu rosu ca-mi plc", "Chad aimer")  # check the user role
