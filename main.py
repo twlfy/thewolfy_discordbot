@@ -32,7 +32,7 @@ async def helpme(ctx):
     """)
 
 @client.command() #=== !clear ===
-@commands.has_role("Chad aimer")  # check the user role
+@commands.has_any_role("tot eu dar cu rosu ca-mi plc", "Chad aimer")  # check the user role
 async def clear(ctx, amount = 0):
     await ctx.channel.purge(limit=amount+1)  #ctx.channel = channel where is executed calling the purge
     await ctx.send("Deleted. Oopsie....i've typed in :\ might delete later")
@@ -40,7 +40,7 @@ async def clear(ctx, amount = 0):
 @clear.error
 async def clear_error(ctx, error):
     if isinstance(error, (commands.MissingRole, commands.MissingAnyRole)):
-        await ctx.send("Oopsie... You don't have admin permissions. You need 'Moderator' role to clear all the sh%t :)")
+        await ctx.send("Oopsie... You don't have admin permissions. You need to be higher in rank than 'Unicorn Intergalactic' role to clear all the sh%t :)")
 
 @client.command() #=== !kick ===
 @commands.has_role("Chad aimer")
