@@ -8,26 +8,33 @@ from discord.member import Member
 from discord.user import User
 from discord.ext.commands.cooldowns import BucketType
 
-client = commands.Bot(command_prefix = '!')
+client = commands.Bot(command_prefix = '.')
 @client.event
 async def on_ready():
     print("Conexiune stabilita !")
+
+@client.event
+async def on_guild_join(guild):
+    for channel in guild.text_channels:
+        if channel.permissions_for(guild.me).send_messages:
+            await channel.send("Whoaa ! Teleporting was fun, hello dummies ! I'm TheWolfy bot. Type .helpme 👀")
+        break
 
 # ==== Bot Commands ==== #
 
 @client.command() #=== !hellobot ===
 async def hellobot(ctx): #ctx = context parameter
-     await ctx.send("Howdy, userino ! I'm TheWølfy bot and right now i'm online ! If you want help please type '!helpme'. Thanks ^_^")
+     await ctx.send("Howdy, userino ! I'm TheWølfy bot and right now i'm online ! If you want help please type '.helpme'. Thanks ^_^")
 
 @client.command() #=== !helpme ===
 async def helpme(ctx):
     await ctx.send("""Glad to help you, userino ! The following are the commands and what can i do !: 
-    !helpme - You already typed the command, lul. That's a command listing all the commands :>
-    !hellobot - A hello message just to check if i'm on duty xd
-    !clear* [lines] - Clear how many lines you want.
-    !kick* [@user] [reason] - If someone was a bad boi, you can kick him for a good reason
-    !ban* [@user] [reason] - Same with kick, but the ban is permanently and can be undone by the administrator 
-    !about - All the things about me
+    .helpme - You already typed the command, lul. That's a command listing all the commands :>
+    .hellobot - A hello message just to check if i'm on duty xd
+    .clear* [lines] - Clear how many lines you want.
+    .kick* [@user] [reason] - If someone was a bad boi, you can kick him for a good reason
+    .ban* [@user] [reason] - Same with kick, but the ban is permanently and can be undone by the administrator 
+    .about - All the things about me
     * = Administrative commands (acces gained for moderators / administrators)
     """)
 
