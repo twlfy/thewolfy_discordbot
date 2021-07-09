@@ -3,6 +3,7 @@
 import discord
 from discord import user
 from discord.ext import commands
+from discord.ext.commands.core import has_permissions
 from discord.ext.commands.errors import MissingPermissions
 from discord.member import Member
 from discord.user import User
@@ -46,6 +47,7 @@ async def onlinecheck(ctx):
     Yes ! I'm online, but only when my master is online too. If you want to manage this server 24/7, pay fucking 4 dollars for a hosting service. xoxo""")
 
 @client.command() #=== !clear ===
+@commands.has_role("tot eu dar cu rosu ca-mi plc")
 async def clear(ctx, amount = 0):
     await ctx.channel.purge(limit=amount+1)  #ctx.channel = channel where is executed calling the purge
     await ctx.send("Deleted. Oopsie....i've typed in :\ might delete later")
@@ -81,6 +83,11 @@ async def kick_error(ctx,error):
     if isinstance(error, (commands.MissingRole, commands.MissingAnyRole)):
         await ctx.send("OOF, you don't have moderator permissions for kicking users, homie :v")
 
+@clear.error
+async def clear_error(ctx,error):
+    if isinstance(error, (commands.MissingRole, commands.MissingAnyRole)):
+        await ctx.send("You have to own a role upper than 'Unicorn Intergalactic' to perform a clear chat :>")
+
 @client.command() #=== !about ===
 async def about(ctx):
     await ctx.send(f"""Hi {ctx.author.mention} ! I'm TheWølfy bot, the same nickname as my creator's one. 
@@ -102,6 +109,16 @@ async def ruja(ctx):
 async def sexruja(context, user: discord.User):
     for _ in range(1000):
         await user.send("ce faci frumosule ma mai iubesti? :hot_face: :hot_face:")
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+
+    if message.content.startswith('.'):
+        await message.channel.send("""I'm under maintenance mode. Please come back later, seems that i have a lot of bugs needing fix -_-
+        Reason of maintenance: Bugs (permissions f#cked up for the .clear command)
+        ```css\nI'm coming back later, see ya !```""")
 
 # ==== Bot Client Key ==== #
 client.run("ODU0MzA1Nzc2NjUwNDIwMjI0.YMiAQQ.Wef2LP-tMqyds7tAuafaTIHcdvo")
