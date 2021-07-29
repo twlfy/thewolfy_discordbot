@@ -44,6 +44,8 @@ async def helpme(ctx):
     .ban* [@user] [reason] - Same with kick, but the ban is permanently and can be undone by the administrator 
     .about - All the things about me
     .onlinecheck - See if i'm online
+    .play [youtube link] - TheWolfy is also a DJ ! Play what you want
+    .leave - Kick him out from the voice channel
     * = Administrative commands (acces gained for moderators / administrators)
     """)
 
@@ -104,7 +106,7 @@ async def about(ctx):
     
     Creator & Owner: TheWølfy#2483
     Created: June 2021
-    Version: 1.0T (R - Official Release | T - Beta version test)""")
+    Version: 1.1T (R - Official Release | T - Beta version test)""")
 
 @client.command()
 async def ruja(ctx):
