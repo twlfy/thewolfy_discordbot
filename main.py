@@ -157,5 +157,16 @@ async def leave(ctx):
     *May except a little delay because of a bug""")
     activity = discord.Game(name=".helpme")
     await client.change_presence(status=discord.Status.idle, activity=activity)
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+
+    if message.content.startswith('.'):
+        await message.channel.send("""I'm under maintenance mode. Please come back later, seems that i have a lot of bugs needing fix -_-
+        Reason of maintenance: Bugs (permissions f#cked up for the .clear command)
+        ```css\nI'm coming back later, see ya !```""")
+
 # ==== Bot Client Key ==== #
 client.run("ODU0MzA1Nzc2NjUwNDIwMjI0.YMiAQQ.Wef2LP-tMqyds7tAuafaTIHcdvo")
