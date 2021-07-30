@@ -1,6 +1,6 @@
 # TheWølfy - All the Official Releases
 #### Version 1.2T (BETA)
-###### TheWolfy is a DJ now !
+###### TheWølfy is a DJ now !
 
   - added .play command
   - added .leave command
@@ -22,4 +22,12 @@
 #### Version 1.0T (BETA)
 ###### Beep boop, i'm online !  
 
-  - {insert description here}
+ Introducing TheWølfy bot, a discord bot dedicated to administration and having fun. The perfect muzzle to create a balanced community. For now, it's in beta and available only to the developer, many changes will be made along the way and it'll take some time 'till gonna be public.
+ I introduced a few start commands: 
+  - .helpme
+  - .hellobot
+
+and a few of bot events based on the user activity !
+
+
+
