@@ -19,7 +19,7 @@ client = commands.Bot(command_prefix = '.')
 async def on_ready():
     print("Conexiune stabilita !")
     activity = discord.Game(name=".helpme")
-    await client.change_presence(status=discord.Status.idle, activity=activity)
+    await client.change_presence(status=discord.Status.online, activity=activity)
 
 @client.event
 async def on_guild_join(guild):

@@ -1,4 +1,13 @@
 # TheWølfy - All the Official Releases
+
+#### Version 1.2T (pre-alfa)
+###### Several changes
+
+  - The bot activity has been changed from idle status to online
+  - 
+  - 
+  - 
+
 #### Version 1.2T (BETA)
 ###### TheWølfy is a DJ now !
 
