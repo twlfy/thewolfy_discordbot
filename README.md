@@ -13,6 +13,8 @@
   - Added About Me description and the profile picture has been changed
   
   I'm trying to make the listening experience as good as possible, so that everything becomes comfortable for you. More changes are on the way focusing just on the FFMPEG library.
+  
+  
   *maintenance mode is still online
 
 #### Version 1.2T (BETA)
@@ -22,6 +24,7 @@
   - added .leave command
   - added bot activity during playing a song and if you're using .leave command, the bot is switching to the default activity
   
+
   *maintenance mode is still online
   
 #### Version 1.1T (BETA)
