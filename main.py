@@ -1,5 +1,6 @@
 # ==== Bot Connextion ==== #
 
+from typing import AsyncContextManager, AsyncIterator
 import discord
 from discord import user
 from discord.ext import commands
@@ -13,6 +14,20 @@ import os
 from discord.utils import get
 from discord import FFmpegPCMAudio
 from os import system
+import asyncio
+
+
+ydl_opts = {
+    'format': 'bestaudio/best',
+    'postprocessors': [{
+        'key': 'FFmpegExtractAudio',
+        'preferredcodec': 'mp3',
+        'preferredquality': '192',
+    }],
+}   
+
+def endSong(guild, path):
+    os.remove(path)                                   
 
 client = commands.Bot(command_prefix = '.')
 @client.event
@@ -108,67 +123,35 @@ async def about(ctx):
     Created: June 2021
     Version: 1.1T (R - Official Release | T - Beta version test)""")
 
-@client.command()
-async def ruja(ctx):
-    for _ in range(2000):
-        myid = '<@769510862192508928>'
-        await ctx.send(f"<@769510862192508928> <@769510862192508928> <@769510862192508928> <@769510862192508928> <@769510862192508928> <@769510862192508928> <@769510862192508928> <@769510862192508928> <@769510862192508928> <@769510862192508928> <@769510862192508928> <@769510862192508928> <@312568518568574976> <@312568518568574976> <@312568518568574976> <@312568518568574976> <@312568518568574976> <@312568518568574976> <@312568518568574976> <@312568518568574976> <@312568518568574976> <@312568518568574976> <@312568518568574976> <@769510862192508928> <@312568518568574976> <@312568518568574976> <@769510862192508928> <@312568518568574976><@312568518568574976> <@312568518568574976> <@312568518568574976> <@312568518568574976> <@769510862192508928> <@312568518568574976> <@312568518568574976> <@312568518568574976> <@312568518568574976> <@312568518568574976> <@312568518568574976> <@312568518568574976> <@312568518568574976> <@312568518568574976> <@312568518568574976> <@312568518568574976> <@312568518568574976> <@312568518568574976> <@312568518568574976>")
-
-@client.command()
-async def sexruja(context, user: discord.User):
-    for _ in range(1000):
-        await user.send("ce faci frumosule ma mai iubesti? :hot_face: :hot_face:")
-
-@client.command()
-async def play(ctx, url : str):
-    song_there = os.path.isfile("song.mp3")
-    try:
-        if song_there:
-            os.remove("song.mp3")
-    except PermissionError:
-        await ctx.send("Wait for the current playing music to end then try again")
-        
-
-    voiceChannel = discord.utils.get(ctx.guild.voice_channels, name='General')
-    await voiceChannel.connect()
-    voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
-
-    ydl_opts = {
-        'format': 'bestaudio/best',
-        'postprocessors': [{
-            'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'mp3',
-            'preferredquality': '192',
-        }],
-    }
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([url])
-    for file in os.listdir("./"):
-        if file.endswith(".mp3"):
-            os.rename(file, "song.mp3")
-    voice.play(discord.FFmpegPCMAudio("song.mp3"))
-    activity = discord.Game(name=f'"{url}"')
-    await client.change_presence(status=discord.Status.idle, activity=activity)
-    await ctx.send(f' Now playing: {url}')
-
-@client.command()
-async def leave(ctx):
-    await ctx.voice_client.disconnect()
-    await ctx.send("""Disconnected uWu
-    
-    *May except a little delay because of a bug""")
-    activity = discord.Game(name=".helpme")
-    await client.change_presence(status=discord.Status.online, activity=activity)
-
-@client.event
-async def on_message(message):
-    if message.author == client.user:
+#=== music bot ===
+@client.command(pass_context=True)
+async def play(ctx, url):
+    if not ctx.message.author.voice:
+        await ctx.send('You are not connected to a voice channel :(')
         return
 
-    if message.content.startswith('.'):
-        await message.channel.send("""I'm under maintenance mode. Please come back later, seems that i have a lot of bugs needing fix -_-
-        Reason of maintenance: Bugs (permissions f#cked up for the .clear command)
-        ```css\nI'm coming back later, see ya !```""")
+    else:
+        channel = ctx.message.author.voice.channel
+    voice_client = await channel.connect()
+    guild = ctx.message.guild
+
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        file = ydl.extract_info(url, download=True)
+        path = str(file['title']) + "-" + str(file['id'] + ".mp3")
+        statusbot = str(file['title'])
+
+    voice_client.play(discord.FFmpegPCMAudio(path), after=lambda x: endSong(guild, path))
+    voice_client.source = discord.PCMVolumeTransformer(voice_client.source, 1)
+    activity = discord.Game(statusbot)
+    await client.change_presence(status=discord.Status.idle, activity=activity)
+
+
+    await ctx.send(f'**Playing: **' + (statusbot))
+    while voice_client.is_playing():
+        await asyncio.sleep(1)
+    else:
+        await voice_client.disconnect()
+        print("Disconnected")
 
 # ==== Bot Client Key ==== #
 client.run("ODU0MzA1Nzc2NjUwNDIwMjI0.YMiAQQ.Wef2LP-tMqyds7tAuafaTIHcdvo")
