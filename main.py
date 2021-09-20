@@ -164,4 +164,4 @@ async def play(ctx, url):
         print("Disconnected")
 
 # ==== Bot Client Key ==== #
-client.run("ODU0MzA1Nzc2NjUwNDIwMjI0.YMiAQQ.ihbH7wLifEN3Y97b8Qxfa6cCJ_w")
+client.run("ODU0MzA1Nzc2NjUwNDIwMjI0.YMiAQQ.0awbU-lJfm2ISuc8uPEBQrNIjeM")
