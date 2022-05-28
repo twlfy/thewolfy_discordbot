@@ -1,5 +1,20 @@
 # TheWølfy - All the Official Releases
 
+### Version 1.2.1T (beta)
+###### Online instances
+  
+  - Fixed the online instances
+  - Added "streaming .helpme" instance, where you can find a button redirecting you to TheWolfy's Twitch channel
+  - FFMPEG is now optimised and fully-responsive to SoundCloud. Youtube conversion have still problems
+
+  Streaming
+  https://imgur.com/Vw6HUDx
+  https://imgur.com/jvOJmwg
+  https://imgur.com/YE8UTPx
+
+  Listening
+  https://imgur.com/ka4zNA1
+
 #### Version 1.2T (pre-alfa)
 ###### Several changes
 

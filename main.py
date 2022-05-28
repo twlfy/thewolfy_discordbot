@@ -41,9 +41,6 @@ client = commands.Bot(command_prefix = '.')
 async def on_ready():
     print("Conexiune stabilita !")
 
-@client.event
-async def on_ready():
-    await client.change_presence(activity=discord.Streaming(name=".helpme", url="https://www.twitch.tv/twlfy"))
     
 @client.event
 async def on_guild_join(guild):
@@ -124,6 +121,10 @@ async def about(ctx):
     Creator & Owner: TheWølfy#2483
     Created: June 2021
     Version: 1.1T (R - Official Release | T - Beta version test)""")
+
+@client.event
+async def on_ready():
+    await client.change_presence(activity=discord.Streaming(name=".helpme", url="https://www.twitch.tv/twlfy"))
 
 @client.command(pass_context=True) #=== .play ===
 async def play(ctx, url):
