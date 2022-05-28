@@ -13,6 +13,8 @@ import os
 from discord.utils import get
 from discord import FFmpegPCMAudio
 from os import system
+from discord.ext import tasks, commands
+import aiocron
 import asyncio
 # ======= Role server setup ======= #
 #
@@ -38,14 +40,18 @@ client = commands.Bot(command_prefix = '.')
 @client.event
 async def on_ready():
     print("Conexiune stabilita !")
-    activity = discord.Game(name=".helpme")
-    await client.change_presence(status=discord.Status.online, activity=activity)
+
+@client.event
+async def on_ready():
+    await client.change_presence(activity=discord.Streaming(name=".helpme", url="https://www.twitch.tv/twlfy"))
+    
 @client.event
 async def on_guild_join(guild):
     for channel in guild.text_channels:
         if channel.permissions_for(guild.me).send_messages:
             await channel.send("Whoaa ! Teleporting was fun, hello dummies ! I'm TheWolfy bot. Type .helpme 👀")
         break
+
 # ==== Bot Commands ==== #
 @client.command() #=== !hellobot ===
 async def hellobot(ctx): #ctx = context parameter
@@ -64,11 +70,14 @@ async def helpme(ctx):
     .leave - Kick him out from the voice channel
     * = Administrative commands (acces gained for moderators / administrators)
     """)
+
 @client.command()
-async def onlinecheck(ctx): #=== .onlinecheck ===
-    await ctx.send("""Status: Online
-    
-    Yes ! I'm online, but only when my master is online too. If you want to manage this server 24/7, pay fucking 4 dollars for a hosting service. xoxo""")
+async def onlinecheck(ctx, *args):
+    retStr = str("""```css\nOnline ! Yes ! I'm online, but only when my master is online too. If you want to manage this server 24/7, pay fucking 4 dollars for a hosting service. xoxo```""")
+    embed = discord.Embed(title="")
+    embed.add_field(name="Status:",value=retStr)
+    await ctx.send(embed=embed)
+
 @client.command() #=== .clear ===
 @commands.has_role("tot eu dar cu rosu ca-mi plc")
 async def clear(ctx, amount = 0):
@@ -115,6 +124,7 @@ async def about(ctx):
     Creator & Owner: TheWølfy#2483
     Created: June 2021
     Version: 1.1T (R - Official Release | T - Beta version test)""")
+
 @client.command(pass_context=True) #=== .play ===
 async def play(ctx, url):
     if not ctx.message.author.voice:
@@ -139,5 +149,7 @@ async def play(ctx, url):
         await voice_client.disconnect()
         print("Disconnected")
 
+        
+
 # ==== Bot Client Key ==== #
-client.run("ODU0MzA1Nzc2NjUwNDIwMjI0.YMiAQQ.vHokNi5b2w6uFgVa3ziDSnv46pc")
+client.run("ODU0MzA1Nzc2NjUwNDIwMjI0.Gsm6aq.pl0RoX7vtBo_N342et58gpUD24AY9uPTqjIihY")
