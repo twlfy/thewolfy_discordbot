@@ -125,6 +125,7 @@ async def about(ctx):
 @client.event
 async def on_ready():
     await client.change_presence(activity=discord.Streaming(name=".helpme", url="https://www.twitch.tv/twlfy"))
+    
 
 @client.command(pass_context=True) #=== .play ===
 async def play(ctx, url):
