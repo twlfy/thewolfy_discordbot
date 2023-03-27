@@ -8,13 +8,11 @@ from discord.ext.commands.errors import MissingPermissions
 from discord.member import Member
 from discord.user import User
 from discord.ext.commands.cooldowns import BucketType
-import youtube_dl
 import os
 from discord.utils import get
 from discord import FFmpegPCMAudio
 from os import system
 from discord.ext import tasks, commands
-import aiocron
 import asyncio
 # ======= Role server setup ======= #
 #
@@ -127,31 +125,6 @@ async def on_ready():
     await client.change_presence(activity=discord.Streaming(name=".helpme", url="https://www.twitch.tv/twlfy"))
     
 
-@client.command(pass_context=True) #=== .play ===
-async def play(ctx, url):
-    if not ctx.message.author.voice:
-        await ctx.send('You are not connected to a voice channel :(')
-        return
-    else:
-        channel = ctx.message.author.voice.channel
-    voice_client = await channel.connect()
-    guild = ctx.message.guild
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        file = ydl.extract_info(url, download=True)
-        path = str(file['title']) + "-" + str(file['id'] + ".mp3")
-        statusbot = str(file['title'])
-    voice_client.play(discord.FFmpegPCMAudio(path), after=lambda x: endSong(guild, path))
-    voice_client.source = discord.PCMVolumeTransformer(voice_client.source, 1)
-    activity = discord.Game(statusbot)
-    await client.change_presence(status=discord.Status.idle, activity=activity)
-    await ctx.send(f'**Playing: **' + (statusbot))
-    while voice_client.is_playing():
-        await asyncio.sleep(1)
-    else:
-        await voice_client.disconnect()
-        print("Disconnected")
-
-        
 
 # ==== Bot Client Key ==== #
 client.run("ODU0MzA1Nzc2NjUwNDIwMjI0.Gsm6aq.pl0RoX7vtBo_N342et58gpUD24AY9uPTqjIihY")
